@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generator Prompt AI Pribadi</title>
+    <style>
+        /* Gaya dasar halaman belakang */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            color: #f8fafc;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Kotak mengambang (Overlay/Card) */
+        .overlay-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #38bdf8;
+            font-size: 24px;
+        }
+
+        /* Area Upload Foto */
+        .upload-box {
+            border: 2px dashed #38bdf8;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: 0.3s;
+            background: rgba(56, 189, 248, 0.05);
+        }
+
+        .upload-box:hover {
+            background: rgba(56, 189, 248, 0.15);
+        }
+
+        /* Pratinjau Foto */
+        #preview {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
+            display: none;
+            margin-top: 10px;
+        }
+
+        /* Tombol Eksekusi */
+        .btn-submit {
+            background: #0284c7;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: #0369a1;
+        }
+
+        /* Kotak Hasil Prompt */
+        .result-box {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        label {
+            font-size: 14px;
+            color: #94a3b8;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            background: #0f172a;
+            color: #f1f5f9;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            padding: 10px;
+            box-sizing: border-box;
+            resize: none;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Kotak Mengambang Utama -->
+    <div class="overlay-card">
+        <h2>AI Prompt Generator</h2>
+        <p style="color: #94a3b8; font-size: 14px;">Upload foto referensi untuk mendapatkan prompt otomatis</p>
+        
+        <!-- Bagian Input Gambar -->
+        <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+            <span id="uploadText">Klik untuk Masukkan Foto Referensi</span>
+            <input type="file" id="fileInput" accept="image/*" style="display: none;" onchange="previewImage(event)">
+            <img id="preview" alt="Pratinjau Foto">
+        </div>
+
+        <button class="btn-submit" onclick="generatePrompt()">ENTER / GENERATE</button>
+
+        <!-- Bagian Hasil Prompt -->
+        <div class="result-box">
+            <label for="promptOutput">Prompt :</label>
+            <textarea id="promptOutput" placeholder="Hasil prompt akan muncul di sini setelah di-enter..." readonly></textarea>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk menampilkan foto setelah di-upload
+        function previewImage(event) {
+            const input = event.target;
+            const preview = document.getElementById('preview');
+            const uploadText = document.getElementById('uploadText');
+
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                    uploadText.style.display = 'none';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Simulasi fungsi generate prompt (Nanti dihubungkan ke API Gemini asli)
+        function generatePrompt() {
+            const fileInput = document.getElementById('fileInput');
+            const output = document.getElementById('promptOutput');
+
+            if (!fileInput.files[0]) {
+                alert("Silakan masukkan foto referensi terlebih dahulu!");
+                return;
+            }
+
+            output.value = "Sedang menganalisis foto...";
+
+            // Ini adalah simulasi teks teks yang keluar.
+            // Di tahap berikutnya, bagian ini yang akan kita tembak langsung ke Google Gemini API.
+            setTimeout(() => {
+                output.value = "Hyper-realistic photo, a couple standing at a wedding venue, wearing beautiful Indonesian batik and black traditional clothes, soft cinematic lighting, bokeh background, 8k resolution, highly detailed features --ar 4:5";
+            }, 1500); 
+        }
+    </script>
+</body>
+</html>
